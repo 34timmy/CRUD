@@ -1,0 +1,4 @@
+ru\javarush\model\User.class
+ru\javarush\controller\UserController.class
+ru\javarush\DAO\UserDAO.class
+ru\javarush\service\UserService.class
