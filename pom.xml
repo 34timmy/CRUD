@@ -3,74 +3,100 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ru.javarush</groupId>
-    <artifactId>MyCRUD</artifactId>
+    <artifactId>MyCRUD2</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>MyCrud</name>
+    <name>MyCrud2</name>
     <url>http://maven.apache.org</url>
 
     <properties>
-        <spring.version>4.1.5.RELEASE</spring.version>
-        <hibernate.version>4.3.8.Final</hibernate.version>
         <mysql.version>5.1.10</mysql.version>
-        <junit-version>4.11</junit-version>
-        <servlet-api-version>3.1.0</servlet-api-version>
         <jsp-version>2.1</jsp-version>
         <jstl-version>1.2</jstl-version>
-        <java.version>1.7</java.version>
+        <java-version>1.8</java-version>
+        <org.springframework-version>4.2.1.RELEASE</org.springframework-version>
+        <org.aspectj-version>1.6.10</org.aspectj-version>
+        <org.hibernate-version>4.3.10.Final</org.hibernate-version>
+
 
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${org.springframework-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>${spring.version}</version>
+            <version>${org.springframework-version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
+            <version>${org.springframework-version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>${spring.version}</version>
+            <version>${org.springframework-version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>${spring.version}</version>
+            <version>${org.springframework-version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
-            <version>${spring.version}</version>
+            <version>${org.springframework-version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>${spring.version}</version>
+            <version>${org.springframework-version}</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>1.5.2.RELEASE</version>
+        </dependency>
+        <!-- CGLIB is required to process @Configuration classes -->
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>2.2.2</version>
+        </dependency>
         <!-- Hibernate 4 dependencies -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>${hibernate.version}</version>
+            <version>${org.hibernate-version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-c3p0</artifactId>
-            <version>${hibernate.version}</version>
+            <version>${org.hibernate-version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${org.hibernate-version}</version>
+        </dependency>
+        <!-- AspectJ -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>${org.aspectj-version}</version>
+        </dependency>
         <!--MYSQL Connector -->
         <dependency>
             <groupId>mysql</groupId>
@@ -82,9 +108,20 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>${servlet-api-version}</version>
+            <version>3.0.1</version>
+            <scope>provided</scope>
         </dependency>
-
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
+            <version>2.3.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>jsp-api</artifactId>
@@ -98,14 +135,13 @@
             <artifactId>jstl</artifactId>
             <version>${jstl-version}</version>
         </dependency>
-
-        <!-- JUnit -->
+        <!-- @Inject -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit-version}</version>
-            <scope>test</scope>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
         </dependency>
+
     </dependencies>
 
 </project>

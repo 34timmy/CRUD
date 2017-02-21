@@ -1,17 +1,13 @@
 package ru.javarush.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.javarush.model.User;
 import ru.javarush.service.UserService;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -23,53 +19,70 @@ public class UserController {
 
 
     public UserController() {
-        System.out.println("UserController()");
+
     }
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/")
-    public ModelAndView listUser(ModelAndView model) throws IOException {
-        List<User> listUser = userService.getAllUsers();
+    @RequestMapping(value = "/list")
+    public ModelAndView listUser() {
+        ModelAndView model=new ModelAndView("list");
+        List<User> listUser = userService.findAll();
         model.addObject("listUser", listUser);
-        model.setViewName("home");
         return model;
     }
 
-    @RequestMapping(value = "/newUser", method = RequestMethod.GET)
-    public ModelAndView newContact(ModelAndView model) {
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public ModelAndView newUserPage() {
+        ModelAndView model=new ModelAndView("form");
         User user = new User();
         user.setCreationDate(new Date());
         model.addObject("user", user);
-        model.setViewName("UserForm");
         return model;
     }
 
-    @RequestMapping(value = "/saveUser", method = RequestMethod.POST)
-    public ModelAndView saveUser(@ModelAttribute User user) {
-        if (user.getId() == 0) {
-            userService.addUser(user);
-        } else {
-            userService.updateUser(user);
-            user.setCreationDate(new Date());
-        }
-        return new ModelAndView("redirect:/");
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public ModelAndView addUser(@ModelAttribute User user) {
+    ModelAndView model=new ModelAndView();
+       userService.create(user);
+       model.setViewName("redirect:/list");
+        return model;
     }
 
-    @RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
-    public ModelAndView deleteEmployee(HttpServletRequest request) {
-        int userId = Integer.parseInt(request.getParameter("id"));
-        userService.deleteUser(userId);
-        return new ModelAndView("redirect:/");
+    @RequestMapping(value="/delete/{id}", method=RequestMethod.GET)
+    public ModelAndView deleteShop(@PathVariable Integer id){
+        ModelAndView model = new ModelAndView("redirect:/list");
+
+        User user = userService.delete(id);
+
+
+        return model;
     }
 
-    @RequestMapping(value = "/editUser", method = RequestMethod.GET)
-    public ModelAndView editContact(HttpServletRequest request) {
-        int userId = Integer.parseInt(request.getParameter("id"));
-        User user = userService.getUser(userId);
-        ModelAndView model = new ModelAndView("UserForm");
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public ModelAndView editUserPage(@PathVariable Integer id) {
+        ModelAndView model=new ModelAndView("edit");
+        User user = userService.findById(id);
         model.addObject("user", user);
+        return model;
+    }
+    @RequestMapping(value="/edit/{id}", method=RequestMethod.POST)
+    public ModelAndView saveUser(@ModelAttribute User user, @PathVariable Integer id, final RedirectAttributes redirectAttributes){
+        ModelAndView mav = new ModelAndView("redirect:/list");
+
+        userService.update(user);
+
+
+        return mav;
+    }
+    @RequestMapping(value="/search", method=RequestMethod.GET)
+    public ModelAndView userSearchPage(@RequestParam(value = "searchstring", required = false) String name) {
+        ModelAndView model = new ModelAndView("list");
+
+        List<User> listUser = userService.search(name);
+
+        model.addObject("listUser", listUser);
 
         return model;
     }

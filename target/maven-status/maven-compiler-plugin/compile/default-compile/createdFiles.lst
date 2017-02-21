@@ -1,4 +1,7 @@
+ru\javarush\init\Initializer.class
 ru\javarush\model\User.class
+ru\javarush\repository\custom\UserRepositoryCustom.class
+ru\javarush\repository\UserRepository.class
+ru\javarush\init\WebAppConfig.class
 ru\javarush\controller\UserController.class
-ru\javarush\DAO\UserDAO.class
 ru\javarush\service\UserService.class
