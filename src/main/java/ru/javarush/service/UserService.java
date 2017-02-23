@@ -1,5 +1,7 @@
 package ru.javarush.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.javarush.model.User;
@@ -16,7 +18,7 @@ import java.util.List;
 @Service
 @Transactional
 public class UserService {
-
+    private static final int PAGE_SIZE = 5;
 
     @Resource
     private UserRepository userRepository;
@@ -28,8 +30,8 @@ public class UserService {
     }
 
     @Transactional
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public Page<User> findAll(Integer pageNumber) {
+        return userRepository.findAll(new PageRequest(pageNumber-1,PAGE_SIZE));
     }
 
     @Transactional

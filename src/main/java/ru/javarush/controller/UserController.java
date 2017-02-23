@@ -1,6 +1,7 @@
 package ru.javarush.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,11 +26,20 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/list")
-    public ModelAndView listUser() {
-        ModelAndView model=new ModelAndView("list");
-        List<User> listUser = userService.findAll();
+    @RequestMapping(value = "/list/{pageNumber}")
+    public ModelAndView listUser(@PathVariable Integer pageNumber) {
+        ModelAndView model=new ModelAndView("list/{pageNumber}");
+
+        Page<User> page = userService.findAll(pageNumber);
+        List<User> listUser=page.getContent();
+        int current = page.getNumber() + 1;
+        int begin = Math.max(1, current - 5);
+        int end = Math.min(begin + 10, page.getTotalPages());
         model.addObject("listUser", listUser);
+        model.addObject("page", page);
+        model.addObject("beginIndex", begin);
+        model.addObject("endIndex", end);
+        model.addObject("currentIndex", current);
         return model;
     }
 
@@ -46,13 +56,13 @@ public class UserController {
     public ModelAndView addUser(@ModelAttribute User user) {
     ModelAndView model=new ModelAndView();
        userService.create(user);
-       model.setViewName("redirect:/list");
+       model.setViewName("redirect:/list/1");
         return model;
     }
 
     @RequestMapping(value="/delete/{id}", method=RequestMethod.GET)
-    public ModelAndView deleteShop(@PathVariable Integer id){
-        ModelAndView model = new ModelAndView("redirect:/list");
+    public ModelAndView delete(@PathVariable Integer id){
+        ModelAndView model = new ModelAndView("redirect:/list/1");
 
         User user = userService.delete(id);
 
@@ -68,17 +78,17 @@ public class UserController {
         return model;
     }
     @RequestMapping(value="/edit/{id}", method=RequestMethod.POST)
-    public ModelAndView saveUser(@ModelAttribute User user, @PathVariable Integer id, final RedirectAttributes redirectAttributes){
-        ModelAndView mav = new ModelAndView("redirect:/list");
+    public ModelAndView saveUser(@ModelAttribute User user, @PathVariable Integer id){
+        ModelAndView mav = new ModelAndView("redirect:/list/1");
 
         userService.update(user);
 
 
         return mav;
     }
-    @RequestMapping(value="/search", method=RequestMethod.GET)
-    public ModelAndView userSearchPage(@RequestParam(value = "searchstring", required = false) String name) {
-        ModelAndView model = new ModelAndView("list");
+    @RequestMapping(value="/search/{pageNumber}", method=RequestMethod.GET)
+    public ModelAndView userSearchPage(@PathVariable Integer pageNumber, @RequestParam(value = "searchstring", required = false) String name) {
+        ModelAndView model = new ModelAndView("list/{pageNumber}");
 
         List<User> listUser = userService.search(name);
 

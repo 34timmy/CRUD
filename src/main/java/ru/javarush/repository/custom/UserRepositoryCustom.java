@@ -1,5 +1,7 @@
 package ru.javarush.repository.custom;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ru.javarush.model.User;
@@ -12,4 +14,5 @@ import java.util.List;
 public interface UserRepositoryCustom {
     @Query(value = "SELECT * from User where User.name LIKE %:name%",nativeQuery = true)
     List<User> findByName(@Param("name")String name);
+
 }

@@ -66,7 +66,7 @@
           </button>
           <ul class="nav navbar-nav">
 		  	<li><a href="${pageContext.request.contextPath}/create">Create New User</a></li> 
-	      	<li><a href="${pageContext.request.contextPath}/list">List Users</a></li>
+	      	<li><a href="${pageContext.request.contextPath}/list/1">List Users</a></li>
 	      </ul>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
