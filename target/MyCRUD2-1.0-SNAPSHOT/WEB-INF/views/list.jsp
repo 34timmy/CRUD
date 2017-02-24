@@ -1,5 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <c:import url="/WEB-INF/views/layout.jsp" charEncoding="UTF-8">
     <c:param name="title" value="User List"/>
@@ -37,6 +38,23 @@
             </table>
         </div>
         <!-- /container -->
+        <c:choose>
+            <c:when test="${fn:contains(requestScope['javax.servlet.forward.request_uri'],'list' ) }">
+                <c:url var="firstUrl" value="/list/1"/>
+                <c:url var="lastUrl" value="/list/${page.totalPages}"/>
+                <c:url var="prevUrl" value="/list/${currentIndex - 1}"/>
+                <c:url var="nextUrl" value="/list/${currentIndex + 1}"/>
+            </c:when>
+            <c:otherwise>
+                <c:url var="firstUrl" value="/search/1?${requestScope['javax.servlet.forward.query_string']}"/>
+                <c:url var="lastUrl"
+                       value="/search/${page.totalPages}?${requestScope['javax.servlet.forward.query_string']}"/>
+                <c:url var="prevUrl"
+                       value="/search/${currentIndex - 1}?${requestScope['javax.servlet.forward.query_string']}"/>
+                <c:url var="nextUrl"
+                       value="/search/${currentIndex + 1}?${requestScope['javax.servlet.forward.query_string']}"/>
+            </c:otherwise>
+        </c:choose>
         <div class="pagination">
             <ul>
                 <c:choose>
@@ -45,12 +63,20 @@
                         <li class="disabled"><a href="#">&lt;</a></li>
                     </c:when>
                     <c:otherwise>
-                        <li><a href="${pageContext.request.contextPath}/list/${1}">&lt;&lt;</a></li>
-                        <li><a href="${pageContext.request.contextPath}/list/${currentIndex - 1}">&lt;</a></li>
+                        <li><a href="${firstUrl}">&lt;&lt;</a></li>
+                        <li><a href="${prevUrl}">&lt;</a></li>
                     </c:otherwise>
                 </c:choose>
                 <c:forEach var="i" begin="${beginIndex}" end="${endIndex}">
-                    <c:url var="pageUrl" value="/list/${i}"/>
+                    <c:choose>
+                        <c:when test="${fn:contains(requestScope['javax.servlet.forward.request_uri'],'list' ) }">
+                            <c:url var="pageUrl" value="/list/${i}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:url var="pageUrl"
+                                   value="/search/${i}?${requestScope['javax.servlet.forward.query_string']}"/>
+                        </c:otherwise>
+                    </c:choose>
                     <c:choose>
                         <c:when test="${i == currentIndex}">
                             <li class="active"><a href="${pageUrl}"><c:out value="${i}"/></a></li>
@@ -66,11 +92,12 @@
                         <li class="disabled"><a href="#">&gt;&gt;</a></li>
                     </c:when>
                     <c:otherwise>
-                        <li><a href="${pageContext.request.contextPath}/list/${currentIndex + 1}">&gt;</a></li>
-                        <li><a href="${pageContext.request.contextPath}/list/${page.totalPages}">&gt;&gt;</a></li>
+                        <li><a href="${nextUrl}">&gt;</a></li>
+                        <li><a href="${lastUrl}">&gt;&gt;</a></li>
                     </c:otherwise>
                 </c:choose>
             </ul>
         </div>
+
     </c:param>
 </c:import>

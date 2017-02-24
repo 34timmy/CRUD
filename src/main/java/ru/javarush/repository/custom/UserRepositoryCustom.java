@@ -12,7 +12,7 @@ import java.util.List;
  * Created by Тимур on 21.02.2017.
  */
 public interface UserRepositoryCustom {
-    @Query(value = "SELECT * from User where User.name LIKE %:name%",nativeQuery = true)
-    List<User> findByName(@Param("name")String name);
+
+    Page<User> findByNameContaining(@Param("name")String name,Pageable pageable);
 
 }

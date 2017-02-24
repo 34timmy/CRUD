@@ -62,8 +62,8 @@ public class UserService {
 
 
     @Transactional
-    public List<User> search(String name) {
-        return userRepository.findByName(name);
+    public Page<User> findByName(String name, Integer pageNumber) {
+        return userRepository.findByNameContaining(name,new PageRequest(pageNumber-1,PAGE_SIZE));
     }
 
 

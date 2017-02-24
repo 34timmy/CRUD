@@ -28,7 +28,7 @@ public class UserController {
 
     @RequestMapping(value = "/list/{pageNumber}")
     public ModelAndView listUser(@PathVariable Integer pageNumber) {
-        ModelAndView model=new ModelAndView("list/{pageNumber}");
+        ModelAndView model=new ModelAndView("list");
 
         Page<User> page = userService.findAll(pageNumber);
         List<User> listUser=page.getContent();
@@ -88,11 +88,19 @@ public class UserController {
     }
     @RequestMapping(value="/search/{pageNumber}", method=RequestMethod.GET)
     public ModelAndView userSearchPage(@PathVariable Integer pageNumber, @RequestParam(value = "searchstring", required = false) String name) {
-        ModelAndView model = new ModelAndView("list/{pageNumber}");
+        ModelAndView model = new ModelAndView("list");
 
-        List<User> listUser = userService.search(name);
+        Page<User> page = userService.findByName(name,pageNumber);
+        List<User> listUser = page.getContent();
 
+        int current = page.getNumber() + 1;
+        int begin = Math.max(1, current - 5);
+        int end = Math.min(begin + 10, page.getTotalPages());
         model.addObject("listUser", listUser);
+        model.addObject("page", page);
+        model.addObject("beginIndex", begin);
+        model.addObject("endIndex", end);
+        model.addObject("currentIndex", current);
 
         return model;
     }

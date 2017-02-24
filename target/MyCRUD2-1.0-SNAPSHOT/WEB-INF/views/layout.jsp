@@ -70,7 +70,7 @@
 	      </ul>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" action="search" method="get">
+          <form class="navbar-form navbar-right" action="${pageContext.request.contextPath}/search/${1}" method="get">
             <div class="form-group">
               <input type="text" placeholder="Name" name="searchstring" class="form-control">
             </div>

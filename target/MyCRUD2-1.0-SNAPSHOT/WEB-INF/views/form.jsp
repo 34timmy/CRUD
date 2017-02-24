@@ -19,7 +19,7 @@
                 </div>
                 <div class="form-group">
                     <label for="is_Admin">is Admin:</label>
-                    <form:checkbox name="is_Admin" class="form-control" path="isAdmin"/>
+                    <form:checkbox  name="is_Admin"  class="form-control" path="isAdmin" />
                 </div>
                 <button type="submit" class="btn btn-default">Create</button>
             </form:form>

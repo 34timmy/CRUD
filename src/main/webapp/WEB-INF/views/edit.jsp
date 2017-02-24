@@ -17,7 +17,7 @@
                     <label for="age">Age</label>
                     <form:input path="age" class="form-control" />
                 </div>
-                <div class="form-group">
+                <div class="form-group" >
                     <label for="is_Admin">is Admin:</label>
                     <form:checkbox name="is_Admin" class="form-control" path="isAdmin"/>
                 </div>
