@@ -55,48 +55,6 @@
                        value="/search/${currentIndex + 1}?${requestScope['javax.servlet.forward.query_string']}"/>
             </c:otherwise>
         </c:choose>
-        <!-- pagination------------- -->
-        <style>
-            .w3-btn, .w3-btn:link, .w3-btn:visited {
-                color: #FFFFFF;
-                background-color: #4CAF50;
-            }
-
-            *, *:before, *:after {
-                box-sizing: inherit;
-            }
-
-            html, body {
-                font-family: Verdana, sans-serif;
-                font-size: 15px;
-                line-height: 1.5;
-            }
-
-            html {
-                -ms-text-size-adjust: 100%;
-                -webkit-text-size-adjust: 100%;
-            }
-
-            .pagination {
-                display: inline-block;
-            }
-
-            .pagination a {
-                color: black;
-                float: left;
-                padding: 8px 16px;
-                text-decoration: none;
-            }
-
-            .pagination a.active {
-                background-color: #4CAF50;
-                color: white;
-            }
-
-            .pagination a:hover:not(.active) {
-                background-color: #ddd;
-            }
-        </style>
         <div class="pagination">
 
                 <c:choose>
@@ -142,3 +100,51 @@
 
     </c:param>
 </c:import>
+
+<!-- pagination------------- -->
+<style>
+    .w3-btn, .w3-btn:link, .w3-btn:visited {
+        color: #FFFFFF;
+        background-color: #4CAF50;
+    }
+
+    .w3-left {
+        margin-right: 5px;
+    }
+
+    *, *:before, *:after {
+        box-sizing: inherit;
+    }
+
+    html, body {
+        font-family: Verdana, sans-serif;
+        font-size: 15px;
+        line-height: 1.5;
+    }
+
+    html {
+        -ms-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    .pagination {
+        display: inline-block;
+
+    }
+
+    .pagination a {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+    }
+
+    .pagination a.active {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .pagination a:hover:not(.active) {
+        background-color: #ddd;
+    }
+</style>
