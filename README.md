@@ -26,6 +26,7 @@
 
 ## Запуск приложения
 
-1) Скопировать в ../tomcat/webapps: папку target/crud-1 и target/crud-1.war
+1) Скопировать в ../tomcat/webapps: target/crud-1.war
 2) Запустить Tomcat
+
 Открыть приложение в браузере по адресу: http://localhost:8080/crud-1/list/1
