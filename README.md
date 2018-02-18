@@ -1,11 +1,11 @@
-# Реализация простого CRUD Web приложения.
+# Implementation of a simple CRUD Web application.
 
 <p align="center">
   <img src="appview.JPG" alt="view"/>
 </p>
 
-Приложение с поиском по имени и пэйджингом.
-Поля:
+The application with search by name and paging.
+Fields:
  * Имя
  * Возраст
  * Является ли пользователь администратором
